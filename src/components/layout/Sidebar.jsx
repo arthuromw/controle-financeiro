@@ -19,7 +19,9 @@ export default function Sidebar({ isVisible, onClose }) {
     <div className={sidebarClasses}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 className="sidebar-title">Meu Financeiro</h2>
-        <button className="hamburger-button" onClick={onClose} style={{ fontSize: '1.5rem', display: 'block' }}>
+        
+        {/* Este botão será controlado pela nova regra de CSS que adicionamos */}
+        <button className="hamburger-button" onClick={onClose}>
           &times;
         </button>
       </div>
@@ -28,7 +30,6 @@ export default function Sidebar({ isVisible, onClose }) {
           <NavLink
             key={item.name}
             to={item.href}
-            // Adiciona a classe 'active' dinamicamente
             className={({ isActive }) => (isActive ? 'active' : '')}
           >
             {item.name}

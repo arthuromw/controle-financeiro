@@ -1,64 +1,88 @@
 /* FILE: src/index.css */
 
 /* ==========================================================================
-   1. Definição do Tema "Industrial/Terroso"
+   1. Definição do Tema Profissional
    ========================================================================== */
 :root {
-  --cor-fundo: #f1f5f9;
-  --cor-principal: #2d3748;
-  --cor-acento: #dd6b20;
-  --cor-texto: #1a202c;
-  --cor-texto-claro: #4a5568;
-  --cor-borda: #cbd5e1;
+  /* Cores */
+  --cor-fundo: #f8fafc; /* Um fundo ainda mais claro, quase branco */
+  --cor-principal: #1e293b; /* Um azul-ardósia mais escuro e sóbrio */
+  --cor-acento: #f59e0b; /* Amarelo-âmbar para destaque */
+  --cor-texto: #0f172a; /* Texto bem escuro para máximo contraste */
+  --cor-texto-claro: #64748b; /* Cinza para textos secundários */
+  --cor-borda: #e2e8f0;
   --cor-branco: #ffffff;
-  --cor-sucesso: #38a169;
-  --cor-erro: #e53e3e;
+  --cor-sucesso: #10b981;
+  --cor-erro: #ef4444;
+
+  /* Tipografia */
   font-family: "Roboto", sans-serif;
+
+  /* Efeitos e Transições */
+  --sombra-suave: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+  --sombra-media: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+  --transicao-rapida: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ==========================================================================
-   2. Estilos Base e Globais
+   2. Estilos Base e Globais com Polimento
    ========================================================================== */
-body { margin: 0; background-color: var(--cor-fundo); color: var(--cor-texto); }
-h1, h2, h3 { margin-top: 0; font-weight: 700; }
-h1 { font-size: 2rem; }
-h2 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--cor-texto-claro); text-transform: uppercase; letter-spacing: 0.05em; }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--cor-fundo); }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
 /* ==========================================================================
    3. Layout Principal
    ========================================================================== */
 .app-container { display: flex; }
-.main-content { flex-grow: 1; padding: 2rem; height: 100vh; overflow-y: auto; box-sizing: border-box; }
+.main-content { flex-grow: 1; padding: 2.5rem; height: 100vh; overflow-y: auto; box-sizing: border-box; }
 
 /* ==========================================================================
-   4. Componentes (Sidebar, Header, Botões, etc.)
+   4. Componentes Refinados
    ========================================================================== */
-.sidebar { width: 250px; flex-shrink: 0; background-color: var(--cor-branco); border-right: 1px solid var(--cor-borda); height: 100vh; padding: 1.5rem; box-sizing: border-box; }
-.sidebar-title { font-size: 1.75rem; font-weight: bold; margin-bottom: 2rem; color: var(--cor-principal); }
+.sidebar { width: 260px; flex-shrink: 0; background-color: var(--cor-branco); border-right: 1px solid var(--cor-borda); height: 100vh; padding: 1.5rem; box-sizing: border-box; transition: var(--transicao-rapida); }
+.sidebar-title { font-size: 1.75rem; font-weight: bold; margin-bottom: 2.5rem; color: var(--cor-principal); }
 .sidebar-nav { display: flex; flex-direction: column; }
-.sidebar-nav a { padding: 0.75rem 1rem; margin: 0.25rem 0; text-decoration: none; color: var(--cor-texto-claro); border-radius: 6px; transition: all 0.2s; font-weight: 500; }
-.sidebar-nav a:hover { background-color: #e2e8f0; color: var(--cor-principal); }
-.sidebar-nav a.active { background-color: var(--cor-principal); color: var(--cor-branco); }
+.sidebar-nav a { display: flex; align-items: center; padding: 0.75rem 1rem; margin: 0.25rem 0; text-decoration: none; color: var(--cor-texto-claro); border-radius: 8px; font-weight: 500; transition: var(--transicao-rapida); }
+.sidebar-nav a:hover { background-color: var(--cor-fundo); color: var(--cor-principal); }
+.sidebar-nav a.active { background-color: var(--cor-principal); color: var(--cor-branco); box-shadow: var(--sombra-suave); }
 
-.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; position: relative; z-index: 900; }
-.header span { margin-right: 1rem; color: var(--cor-texto-claro); font-size: 0.875rem; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; position: relative; z-index: 900; }
+.header-email { margin-right: 1rem; color: var(--cor-texto-claro); font-size: 0.875rem; }
 
-button { padding: 0.6rem 1.25rem; border: none; border-radius: 6px; background-color: var(--cor-principal); color: var(--cor-branco); font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.05em; }
-button:hover { filter: brightness(1.2); }
+button { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; background-color: var(--cor-principal); color: var(--cor-branco); font-size: 0.875rem; font-weight: bold; cursor: pointer; transition: var(--transicao-rapida); text-transform: uppercase; letter-spacing: 0.05em; box-shadow: var(--sombra-suave); }
+button:hover { transform: translateY(-2px); box-shadow: var(--sombra-media); }
+button:active { transform: translateY(0px); box-shadow: var(--sombra-suave); }
 button.logout { background-color: var(--cor-erro); }
+button.accent { background-color: var(--cor-acento); }
 
-input, select { padding: 0.75rem; border: 1px solid var(--cor-borda); border-radius: 6px; background-color: #f8fafc; width: 100%; box-sizing: border-box; }
-input:focus, select:focus { outline: none; border-color: var(--cor-principal); box-shadow: 0 0 0 2px rgba(45, 55, 72, 0.2); }
+input, select { padding: 0.85rem 1rem; border: 1px solid var(--cor-borda); border-radius: 8px; background-color: var(--cor-branco); width: 100%; box-sizing: border-box; transition: var(--transicao-rapida); }
+input:focus, select:focus { outline: none; border-color: var(--cor-principal); box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.1); }
 
 .table-container { overflow-x: auto; width: 100%; }
-table { width: 100%; border-collapse: collapse; background-color: var(--cor-branco); border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1); }
-th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--cor-borda); }
-th { background-color: #f8fafc; font-weight: 600; color: var(--cor-texto-claro); text-transform: uppercase; font-size: 0.75rem; }
+table { width: 100%; border-collapse: separate; border-spacing: 0; background-color: var(--cor-branco); border-radius: 12px; border: 1px solid var(--cor-borda); }
+th, td { padding: 1rem 1.25rem; text-align: left; border-bottom: 1px solid var(--cor-borda); }
+th { color: var(--cor-texto-claro); text-transform: uppercase; font-size: 0.75rem; }
 tr:last-child td { border-bottom: none; }
-tr:hover { background-color: #f1f5f9; }
+tbody tr:hover { background-color: #f8fafc; }
 
-.card { background-color: var(--cor-branco); padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1); }
-.card-title { font-size: 1rem; font-weight: 600; color: var(--cor-texto-claro); margin-bottom: 0.5rem; }
+.card { background-color: var(--cor-branco); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--cor-borda); transition: var(--transicao-rapida); }
+.card:hover { transform: translateY(-4px); box-shadow: var(--sombra-media); }
+.card-title { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: var(--cor-texto-claro); margin-bottom: 0.5rem; }
 .card-value { font-size: 2.25rem; font-weight: 700; color: var(--cor-principal); }
 .card-value.positive { color: var(--cor-sucesso); }
 .card-value.negative { color: var(--cor-erro); }
@@ -76,7 +100,12 @@ tr:hover { background-color: #f1f5f9; }
 .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
 .form-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(3, 1fr); }
 .form-grid-full { grid-column: 1 / -1; }
-.dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 1rem; }
+
+/* Regra específica para o botão X dentro da sidebar */
+.sidebar .hamburger-button {
+  display: none;
+}
 
 @media (max-width: 1024px) {
   .sidebar { position: fixed; left: 0; top: 0; transform: translateX(-100%); transition: transform 0.3s ease-in-out; z-index: 1000; box-shadow: 0 0 20px rgba(0,0,0,0.2); }
