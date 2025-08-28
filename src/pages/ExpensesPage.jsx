@@ -59,13 +59,18 @@ export default function ExpensesPage() {
       await getData();
     }
   };
+  
+  const openForm = () => {
+    setCurrentExpense(null);
+    setIsFormVisible(true);
+  };
 
   return (
     <MainLayout>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Compras e Despesas</h1>
+      <div className="page-header">
+        <h1>Compras e Despesas</h1>
         {!isFormVisible && (
-          <button onClick={() => { setCurrentExpense(null); setIsFormVisible(true); }} className="px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md">
+          <button onClick={openForm}>
             Adicionar Despesa
           </button>
         )}

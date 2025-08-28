@@ -66,7 +66,7 @@ const handleSave = async (productData) => {
 
   return (
     <MainLayout>
-      <div className="flex justify-between items-center mb-6">
+      <div className="page-header flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Produtos e Estoque</h1>
         {!isFormVisible && (
           <button onClick={openForm} className="px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700">

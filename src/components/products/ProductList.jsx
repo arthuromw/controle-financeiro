@@ -7,7 +7,7 @@ export default function ProductList({ products, onEdit, onDelete }) {
   }
 
   return (
-    <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+    <div className="table-container overflow-x-auto bg-white rounded-lg shadow-md">
       <table className="min-w-full text-left">
         <thead className="bg-gray-50">
           <tr>

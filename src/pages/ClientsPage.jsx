@@ -58,18 +58,18 @@ export default function ClientsPage() {
 
   return (
     <MainLayout>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Clientes</h1>
+      <div className="page-header">
+        <h1>Clientes</h1>
         {!isFormVisible && (
-          <button onClick={openForm} className="px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700">
+          <button onClick={openForm}>
             Adicionar Cliente
           </button>
         )}
       </div>
 
       {isFormVisible ? (
-        <ClientForm 
-          onSave={handleSave} 
+        <ClientForm
+          onSave={handleSave}
           onCancel={() => { setIsFormVisible(false); setCurrentClient(null); }}
           initialData={currentClient}
         />

@@ -1,178 +1,97 @@
 /* FILE: src/index.css */
 
-/* 1. Definição de Cores e Fontes (Tema) */
+/* ==========================================================================
+   1. Definição do Tema "Industrial/Terroso"
+   ========================================================================== */
 :root {
-  --cor-fundo: #f4f7fa;
-  --cor-principal: #367BF5;
-  --cor-texto: #334155;
-  --cor-texto-claro: #64748b;
-  --cor-borda: #e2e8f0;
+  --cor-fundo: #f1f5f9;
+  --cor-principal: #2d3748;
+  --cor-acento: #dd6b20;
+  --cor-texto: #1a202c;
+  --cor-texto-claro: #4a5568;
+  --cor-borda: #cbd5e1;
   --cor-branco: #ffffff;
-  --cor-sucesso: #10b981;
-  --cor-erro: #ef4444;
-  --sombra: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --cor-sucesso: #38a169;
+  --cor-erro: #e53e3e;
+  font-family: "Roboto", sans-serif;
 }
 
-/* 2. Estilos Base */
-body {
-  margin: 0;
-  background-color: var(--cor-fundo);
-  color: var(--cor-texto);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ==========================================================================
+   2. Estilos Base e Globais
+   ========================================================================== */
+body { margin: 0; background-color: var(--cor-fundo); color: var(--cor-texto); }
+h1, h2, h3 { margin-top: 0; font-weight: 700; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--cor-texto-claro); text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ==========================================================================
+   3. Layout Principal
+   ========================================================================== */
+.app-container { display: flex; }
+.main-content { flex-grow: 1; padding: 2rem; height: 100vh; overflow-y: auto; box-sizing: border-box; }
+
+/* ==========================================================================
+   4. Componentes (Sidebar, Header, Botões, etc.)
+   ========================================================================== */
+.sidebar { width: 250px; flex-shrink: 0; background-color: var(--cor-branco); border-right: 1px solid var(--cor-borda); height: 100vh; padding: 1.5rem; box-sizing: border-box; }
+.sidebar-title { font-size: 1.75rem; font-weight: bold; margin-bottom: 2rem; color: var(--cor-principal); }
+.sidebar-nav { display: flex; flex-direction: column; }
+.sidebar-nav a { padding: 0.75rem 1rem; margin: 0.25rem 0; text-decoration: none; color: var(--cor-texto-claro); border-radius: 6px; transition: all 0.2s; font-weight: 500; }
+.sidebar-nav a:hover { background-color: #e2e8f0; color: var(--cor-principal); }
+.sidebar-nav a.active { background-color: var(--cor-principal); color: var(--cor-branco); }
+
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; position: relative; z-index: 900; }
+.header span { margin-right: 1rem; color: var(--cor-texto-claro); font-size: 0.875rem; }
+
+button { padding: 0.6rem 1.25rem; border: none; border-radius: 6px; background-color: var(--cor-principal); color: var(--cor-branco); font-size: 0.9rem; font-weight: bold; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.05em; }
+button:hover { filter: brightness(1.2); }
+button.logout { background-color: var(--cor-erro); }
+
+input, select { padding: 0.75rem; border: 1px solid var(--cor-borda); border-radius: 6px; background-color: #f8fafc; width: 100%; box-sizing: border-box; }
+input:focus, select:focus { outline: none; border-color: var(--cor-principal); box-shadow: 0 0 0 2px rgba(45, 55, 72, 0.2); }
+
+.table-container { overflow-x: auto; width: 100%; }
+table { width: 100%; border-collapse: collapse; background-color: var(--cor-branco); border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1); }
+th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--cor-borda); }
+th { background-color: #f8fafc; font-weight: 600; color: var(--cor-texto-claro); text-transform: uppercase; font-size: 0.75rem; }
+tr:last-child td { border-bottom: none; }
+tr:hover { background-color: #f1f5f9; }
+
+.card { background-color: var(--cor-branco); padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1); }
+.card-title { font-size: 1rem; font-weight: 600; color: var(--cor-texto-claro); margin-bottom: 0.5rem; }
+.card-value { font-size: 2.25rem; font-weight: 700; color: var(--cor-principal); }
+.card-value.positive { color: var(--cor-sucesso); }
+.card-value.negative { color: var(--cor-erro); }
+.card-value.neutral { color: var(--cor-acento); }
+
+.status-paid { background-color: #d1fae5; color: #065f46; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+.status-pending { background-color: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+
+/* ==========================================================================
+   5. REGRAS DE RESPONSIVIDADE FINAL
+   ========================================================================== */
+.hamburger-button { display: none; font-size: 2rem; background: none; border: none; cursor: pointer; color: var(--cor-principal); z-index: 1001; }
+.overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999; }
+.overlay.visible { display: block; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+.form-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(3, 1fr); }
+.form-grid-full { grid-column: 1 / -1; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem; }
+
+@media (max-width: 1024px) {
+  .sidebar { position: fixed; left: 0; top: 0; transform: translateX(-100%); transition: transform 0.3s ease-in-out; z-index: 1000; box-shadow: 0 0 20px rgba(0,0,0,0.2); }
+  .sidebar.visible { transform: translateX(0); }
+  .hamburger-button { display: block; }
+  .main-content { padding: 1.5rem; }
+  .dashboard-grid, .form-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* 3. Tipografia (Títulos e Textos) */
-h1, h2, h3 {
-  margin-top: 0;
-  font-weight: 700;
-}
-
-h1 { font-size: 2.25rem; }
-h2 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--cor-texto-claro); }
-p { line-height: 1.6; }
-
-/* 4. Layout Principal */
-.app-container {
-  display: flex;
-}
-
-.sidebar {
-  width: 250px;
-  flex-shrink: 0;
-  background-color: var(--cor-branco);
-  border-right: 1px solid var(--cor-borda);
-  height: 100vh;
-  padding: 1.5rem;
-  box-sizing: border-box;
-}
-
-.main-content {
-  flex-grow: 1;
-  padding: 2rem;
-  height: 100vh;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-/* 5. Estilos da Sidebar */
-.sidebar-title {
-  font-size: 1.75rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: var(--cor-principal);
-}
-
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-nav a {
-  padding: 0.75rem 1rem;
-  margin: 0.25rem 0;
-  text-decoration: none;
-  color: var(--cor-texto-claro);
-  border-radius: 6px;
-  transition: all 0.2s ease-in-out;
-  font-weight: 500;
-}
-
-.sidebar-nav a:hover {
-  background-color: #f0f5ff;
-  color: var(--cor-principal);
-}
-
-/* O React Router adiciona a classe .active para o link ativo */
-.sidebar-nav a.active {
-  background-color: var(--cor-principal);
-  color: var(--cor-branco);
-  box-shadow: var(--sombra);
-}
-
-/* 6. Header */
-.header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.header span {
-  margin-right: 1rem;
-  color: var(--cor-texto-claro);
-}
-
-/* 7. Estilos para Elementos Comuns (Botões, Inputs, Tabelas) */
-button, input[type="submit"] {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  background-color: var(--cor-principal);
-  color: var(--cor-branco);
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: var(--sombra);
-}
-
-button:hover, input[type="submit"]:hover {
-  filter: brightness(1.1);
-}
-
-button.logout {
-    background-color: var(--cor-texto-claro);
-}
-
-input, select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--cor-borda);
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-
-input:focus, select:focus {
-    outline: none;
-    border-color: var(--cor-principal);
-    box-shadow: 0 0 0 2px #cce0ff;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: var(--cor-branco);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: var(--sombra);
-}
-
-th, td {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid var(--cor-borda);
-}
-
-th {
-  background-color: #f8f9fa;
-  font-weight: 600;
-  color: var(--cor-texto-claro);
-}
-
-tr:last-child td {
-    border-bottom: none;
-}
-
-tr:hover {
-    background-color: #f0f5ff;
-}
-
-/* 8. Cards */
-.card {
-    background-color: var(--cor-branco);
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: var(--sombra);
+@media (max-width: 768px) {
+  h1 { font-size: 1.75rem; }
+  .main-content { padding: 1rem; }
+  .page-header { flex-direction: column; align-items: flex-start; }
+  .form-grid, .dashboard-grid { grid-template-columns: repeat(1, 1fr); }
+  table { font-size: 0.875rem; }
+  th, td { padding: 0.75rem; }
+  .header-email { display: none; }
 }

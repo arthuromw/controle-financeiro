@@ -28,7 +28,7 @@ export default function ProductForm({ onSave, onCancel, initialData }) {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className="card p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">{initialData ? 'Editar Produto' : 'Novo Produto'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">

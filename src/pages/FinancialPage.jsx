@@ -34,7 +34,7 @@ export default function FinancialPage() {
     if (!window.confirm("Confirmar o recebimento desta venda?")) return;
     try {
       await updateDoc(doc(db, "sales", saleId), { status: 'Pago', paymentDate: serverTimestamp() });
-      getData(); // Recarrega todos os dados
+      getData();
     } catch (error) {
       console.error("Erro ao atualizar a venda:", error);
     }
@@ -44,46 +44,54 @@ export default function FinancialPage() {
     if (!window.confirm("Confirmar o pagamento desta despesa?")) return;
     try {
       await updateDoc(doc(db, "expenses", expenseId), { status: 'Pago', paymentDate: serverTimestamp() });
-      getData(); // Recarrega todos os dados
+      getData();
     } catch (error) {
       console.error("Erro ao atualizar a despesa:", error);
     }
   };
 
+  // Funções para formatar moeda e status, para deixar o código mais limpo
+  const formatCurrency = (value) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+  const getStatusClass = (status) => {
+      if (status === 'Pago') return 'status-paid';
+      return 'status-pending';
+  }
+
   return (
     <MainLayout>
-      <h1 className="text-3xl font-bold mb-6">Gestão Financeira</h1>
+      <h1>Gestão Financeira</h1>
       
       {loading ? <p>Carregando lançamentos...</p> : (
-        <div className="space-y-8">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '1rem' }}>
+          
           {/* SEÇÃO CONTAS A RECEBER */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Contas a Receber</h2>
-            <div className="overflow-x-auto bg-white rounded-lg shadow-md">
-              <table className="min-w-full text-left">
-                <thead className="bg-gray-50">
+          <div className="card">
+            <h2>Contas a Receber</h2>
+            <div className="table-container">
+              <table>
+                <thead>
                   <tr>
-                    <th className="px-6 py-3">Venda</th>
-                    <th className="px-6 py-3">Cliente</th>
-                    <th className="px-6 py-3">Valor</th>
-                    <th className="px-6 py-3">Status</th>
-                    <th className="px-6 py-3">Ação</th>
+                    <th>Venda</th>
+                    <th>Cliente</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Ação</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody>
                   {sales.map((sale) => (
                     <tr key={sale.id}>
-                      <td className="px-6 py-4">{sale.saleDate ? new Date(sale.saleDate.seconds * 1000).toLocaleDateString('pt-BR') : 'N/A'}</td>
-                      <td className="px-6 py-4">{sale.clientName}</td>
-                      <td className="px-6 py-4 font-medium">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(sale.total)}</td>
-                      <td className="px-6 py-4">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${sale.status === 'Pago' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                      <td>{sale.saleDate ? new Date(sale.saleDate.seconds * 1000).toLocaleDateString('pt-BR') : 'N/A'}</td>
+                      <td>{sale.clientName}</td>
+                      <td>{formatCurrency(sale.total)}</td>
+                      <td>
+                        <span className={getStatusClass(sale.status)}>
                           {sale.status || 'Pendente'}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td>
                         {sale.status !== 'Pago' && (
-                          <button onClick={() => handleMarkSaleAsPaid(sale.id)} className="text-indigo-600 hover:text-indigo-900 text-sm font-semibold">
+                          <button onClick={() => handleMarkSaleAsPaid(sale.id)} style={{fontSize: '0.8rem', padding: '0.4rem 0.8rem'}}>
                             Marcar como Recebido
                           </button>
                         )}
@@ -96,33 +104,33 @@ export default function FinancialPage() {
           </div>
 
           {/* SEÇÃO CONTAS A PAGAR */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Contas a Pagar</h2>
-            <div className="overflow-x-auto bg-white rounded-lg shadow-md">
-              <table className="min-w-full text-left">
-                <thead className="bg-gray-50">
+          <div className="card">
+            <h2>Contas a Pagar</h2>
+            <div className="table-container">
+              <table>
+                <thead>
                   <tr>
-                    <th className="px-6 py-3">Vencimento</th>
-                    <th className="px-6 py-3">Descrição</th>
-                    <th className="px-6 py-3">Valor</th>
-                    <th className="px-6 py-3">Status</th>
-                    <th className="px-6 py-3">Ação</th>
+                    <th>Vencimento</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Ação</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody>
                   {expenses.map((expense) => (
                     <tr key={expense.id}>
-                      <td className="px-6 py-4">{new Date(expense.dueDate).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}</td>
-                      <td className="px-6 py-4">{expense.description}</td>
-                      <td className="px-6 py-4 font-medium">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(expense.amount)}</td>
-                      <td className="px-6 py-4">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${expense.status === 'Pago' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                      <td>{new Date(expense.dueDate).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}</td>
+                      <td>{expense.description}</td>
+                      <td>{formatCurrency(expense.amount)}</td>
+                      <td>
+                        <span className={getStatusClass(expense.status)}>
                           {expense.status || 'Pendente'}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td>
                         {expense.status !== 'Pago' && (
-                          <button onClick={() => handleMarkExpenseAsPaid(expense.id)} className="text-indigo-600 hover:text-indigo-900 text-sm font-semibold">
+                          <button onClick={() => handleMarkExpenseAsPaid(expense.id)} style={{fontSize: '0.8rem', padding: '0.4rem 0.8rem'}}>
                             Marcar como Pago
                           </button>
                         )}
